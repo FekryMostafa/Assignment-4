@@ -4,7 +4,7 @@ import numpy as np
 ENV_NAME = "FrozenLake-v1"
 GAMMA = 0.9
 TEST_EPISODES = 20
-EXPLORATION_STEPS = 100  # Number of steps for environment exploration
+EXPLORATION_STEPS = 100
 
 class Agent:
     def __init__(self, is_slippery=True):
@@ -91,29 +91,25 @@ if __name__ == "__main__":
         if average_reward > 0.80:
             print("Stopping as average reward exceeds 0.80.")
             break
+    
     not_slippery_agent = Agent(is_slippery=False)
-# Existing slippery_agent loop
-# ...
 
-# Initialize the agent once before the loop
-not_slippery_agent = Agent(is_slippery=False)
-
-while True:
-        not_slippery_agent.explore_environment()
-        not_slippery_agent.value_iteration()
-        optimal_policy = not_slippery_agent.extract_policy()
-        
-        total_rewards = 0
-        for _ in range(TEST_EPISODES):
-            reward = not_slippery_agent.play_episode(optimal_policy)
-            total_rewards += reward
-        
-        average_reward = total_rewards / TEST_EPISODES
-        if average_reward > not_slippery_agent.best_reward:
-            not_slippery_agent.best_reward = average_reward
-        
-        print(f"Average rewards: {average_reward}, Best reward: {not_slippery_agent.best_reward}")
-        
-        if average_reward > 0.80:
-            print("Stopping as average reward exceeds 0.80.")
-            break
+    while True:
+            not_slippery_agent.explore_environment()
+            not_slippery_agent.value_iteration()
+            optimal_policy = not_slippery_agent.extract_policy()
+            
+            total_rewards = 0
+            for _ in range(TEST_EPISODES):
+                reward = not_slippery_agent.play_episode(optimal_policy)
+                total_rewards += reward
+            
+            average_reward = total_rewards / TEST_EPISODES
+            if average_reward > not_slippery_agent.best_reward:
+                not_slippery_agent.best_reward = average_reward
+            
+            print(f"Average rewards: {average_reward}, Best reward: {not_slippery_agent.best_reward}")
+            
+            if average_reward > 0.80:
+                print("Stopping as average reward exceeds 0.80.")
+                break
