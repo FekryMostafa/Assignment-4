@@ -63,8 +63,8 @@ class Agent:
             action = policy[state]
             next_state, reward, done, _, _ = self.env.step(action)
             if isinstance(next_state, tuple):
-                next_state = next_state[0]  # Assuming the first element is the integer state
-            state = int(next_state)  # Make sure next_state is an integer
+                next_state = next_state[0]
+            state = int(next_state)
             total_reward += reward
         return total_reward
 
