@@ -20,7 +20,7 @@ class Agent:
             action = self.env.action_space.sample()
         step_result = self.env.step(action)
         print("Step result:", step_result)
-        next_state, reward, done, _, _ = step_result  # Corrected this line
+        next_state, reward, done, _, _ = step_result
 
 
 
@@ -55,8 +55,8 @@ class Agent:
     def play_episode(self, policy):
         state = self.env.reset()
         if isinstance(state, tuple):
-            state = state[0]  # Assuming the first element is the integer state
-        state = int(state)  # Make sure state is an integer
+            state = state[0]
+        state = int(state)
         total_reward = 0
         done = False
         while not done:
