@@ -1,6 +1,5 @@
 import gym
 import collections
-from tabulate import tabulate
 
 # Initialize constants
 ENV_NAME = "FrozenLake-v1"
@@ -26,7 +25,7 @@ class Agent:
 
     def update_transits_rewards(self, state, action, new_state, reward):
         self.transits[(state, action)][new_state] += 1
-        self.rewards[(state, action)] = reward
+        self.rewards[(state, action, new_state)] = reward
     
     def play_n_random_steps(self, count):
         state = self.get_state(self.env.reset())
@@ -67,10 +66,10 @@ class Agent:
 
     def calc_action_value(self, state, action):
         target_counts = self.transits[(state, action)]
-        total = sum(sum(transitions.values()) for transitions in self.transits.values())
+        total = sum(target_counts.values())
         action_value = 0.0
         for target_state, count in target_counts.items():
-            reward = self.rewards[(state, action)]
+            reward = self.rewards[(state, action, target_state)]
             action_value += (count / total) * (reward + GAMMA * self.values[target_state])
         return action_value
     
@@ -110,7 +109,7 @@ if __name__ == "__main__":
     
     while True:
         iter_no += 1
-        agent.play_n_random_steps(1000)
+        agent.play_n_random_steps(100)
         agent.value_iteration()
         reward = 0.0
         for _ in range(TEST_EPISODES):
