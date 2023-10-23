@@ -10,6 +10,7 @@ SEED = 42
 class Agent:
     def __init__(self):
         self.env = gym.make(ENV_NAME, is_slippery=True)
+        self.env.action_space.seed(SEED)
         self.state = self.env.reset()
         self.state = self.state[0] if isinstance(self.state, tuple) else self.state
         self.rewards = collections.defaultdict(float)
